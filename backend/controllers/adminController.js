@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 
 const getUsers = async (req, res) => {
     try {
+        console.log("Get all users")
         const { data, error } = await supabase
             .from('users')
             .select('*');
@@ -15,7 +16,9 @@ const getUsers = async (req, res) => {
 };
 
 const createUser = async (req, res) => {
+    console.log("Create new user");
     const { name, email, password, role } = req.body;
+    console.log(name, email, password, role)
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
         const { data, error } = await supabase
@@ -25,8 +28,8 @@ const createUser = async (req, res) => {
             ])
             .select();
 
-        if (error) throw error;
         res.status(201).json(data[0]);
+        if (error) throw error;
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -74,8 +77,11 @@ const assignStudentToTeacher = async (req, res) => {
             ])
             .select();
 
+        res.status(201).json({
+            message: 'Student successfully assigned to teacher',
+            assignment: data[0]
+        });
         if (error) throw error;
-        res.json(data[0]);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -90,5 +96,14 @@ const getStudents = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+const getTeachers = async (req, res) => {
+    try {
+        const { data, error } = await supabase.from('users').select('*').eq('role', 'teacher')
+        if (error) throw error;
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 
-module.exports = { getUsers, createUser, updateUser, deleteUser, assignStudentToTeacher, getStudents };
+module.exports = { getUsers, createUser, updateUser, deleteUser, assignStudentToTeacher, getStudents, getTeachers };

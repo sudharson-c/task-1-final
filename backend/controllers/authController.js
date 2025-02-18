@@ -14,7 +14,26 @@ const register = async (req, res) => {
             .select();
 
         if (error) throw error;
-        res.status(201).json(data[0]);
+        const user = data[0];
+
+        const accessToken = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1hr' });
+        const refreshToken = jwt.sign({ id: user.id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '1d' });
+
+        res.cookie('accessToken', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 60 * 60 * 1000 // 1 hour
+        });
+
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        });
+
+        res.json({ message: 'Registration successful', user, accessToken, refreshToken });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -40,7 +59,6 @@ const login = async (req, res) => {
         const accessToken = jwt.sign({ id: data.id, role: data.role }, process.env.JWT_SECRET, { expiresIn: '1hr' });
         const refreshToken = jwt.sign({ id: data.id }, process.env.JWT_REFRESH_SECRET, { expiresIn: '1d' });
 
-        // Set cookies
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
@@ -55,7 +73,7 @@ const login = async (req, res) => {
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
 
-        res.json({ message: 'Login successful', accessToken: accessToken, refreshToken: refreshToken });
+        res.json({ message: 'Login successful', user: data, accessToken, refreshToken });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
