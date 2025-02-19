@@ -1,9 +1,11 @@
 "use client";
+import useLocalStorage from "@/hooks/useLocalStorage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function StudentProfilePage() {
   const [profile, setProfile] = useState(null);
+  const [user, setUser] = useLocalStorage("user", null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -13,7 +15,7 @@ export default function StudentProfilePage() {
   const fetchProfile = async () => {
     try {
       const response = await axios.get(
-        `${process.env.API_URL}/api/student/profile`
+        `${process.env.API_URL}/api/students/${user.id}/profile/`
       );
       setProfile(response.data);
     } catch (error) {

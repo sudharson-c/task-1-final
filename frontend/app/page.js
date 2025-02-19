@@ -2,6 +2,7 @@
 import LogoutButton from "@/components/LogoutButton";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { useEffect } from "react";
 
 export default function Page() {
   const [user] = useLocalStorage("user", null);
