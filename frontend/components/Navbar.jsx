@@ -9,6 +9,7 @@ export default function Navbar() {
   const [user, setUser] = useLocalStorage("user", null);
 
   if (!user) router.push("/login");
+
   const handleLogout = () => {
     setUser(null);
     router.push("/login");

@@ -9,11 +9,13 @@ export default function ProtectedRoute({ children }) {
   // const [user] = useLocalStorage("user", null);
 
   useEffect(() => {
-    const user = sessionStorage.getItem("user");
-    if (!user) {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const token = sessionStorage.getItem("token");
+
+    if (!user || !token) {
       router.push("/login");
     }
-  }, [user, router]);
+  }, [router]);
 
   if (!user) {
     return <div>Loading...</div>;

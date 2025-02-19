@@ -23,7 +23,7 @@ export default function LoginPage() {
           },
         }
       );
-      sessionStorage.setItem("user", response.data.user);
+      sessionStorage.setItem("user", JSON.stringify(response.data.user));
       sessionStorage.setItem(
         "accessToken",
         JSON.stringify(response.data.accessToken)
