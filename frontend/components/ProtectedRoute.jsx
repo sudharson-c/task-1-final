@@ -6,9 +6,10 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function ProtectedRoute({ children }) {
   const router = useRouter();
-  const [user] = useLocalStorage("user", null);
+  // const [user] = useLocalStorage("user", null);
 
   useEffect(() => {
+    const user = sessionStorage.getItem("user");
     if (!user) {
       router.push("/login");
     }
