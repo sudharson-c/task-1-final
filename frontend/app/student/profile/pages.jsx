@@ -13,7 +13,7 @@ export default function StudentProfilePage() {
   const fetchProfile = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/student/profile"
+        `${process.env.API_URL}/api/student/profile`
       );
       setProfile(response.data);
     } catch (error) {

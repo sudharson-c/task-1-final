@@ -13,7 +13,7 @@ export default function AssignedTeacherPage() {
   const fetchTeacher = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/student/assigned-teacher"
+        `${process.env.API_URL}/api/student/assigned-teacher`
       );
       setTeacher(response.data);
     } catch (error) {

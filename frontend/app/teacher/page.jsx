@@ -14,7 +14,7 @@ export default function AssignedStudentsPage() {
   const fetchStudents = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/teacher/assigned-students"
+        `${process.env.API_URL}/api/teacher/assigned-students`
       );
       setStudents(response.data);
     } catch (error) {

@@ -12,7 +12,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${process.env.API_URL}/api/auth/login`,
         { email, password }
       );
       sessionStorage.setItem(

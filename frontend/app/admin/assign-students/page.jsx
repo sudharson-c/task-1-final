@@ -17,12 +17,12 @@ export default function AssignStudentsPage() {
     try {
       const token = sessionStorage.getItem("accessToken").replace(/"/g, "");
       const [studentsRes, teachersRes] = await Promise.all([
-        axios.get("http://localhost:5000/api/admin/students", {
+        axios.get(`${process.env.API_URL}/api/admin/students`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }),
-        axios.get("http://localhost:5000/api/admin/teachers", {
+        axios.get(`${process.env.API_URL}/api/admin/teachers`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

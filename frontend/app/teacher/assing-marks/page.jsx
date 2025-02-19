@@ -10,7 +10,7 @@ export default function AssignMarksPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/teacher/assign-marks", {
+      await axios.post(`${process.env.API_URL}/api/teacher/assign-marks`, {
         studentId,
         subject,
         score,

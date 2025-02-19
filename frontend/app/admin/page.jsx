@@ -29,7 +29,7 @@ export default function ManageUsersPage() {
   const fetchUsers = async () => {
     try {
       const token = sessionStorage.getItem("accessToken").replace(/"/g, "");
-      const response = await axios.get("http://localhost:5000/api/admin", {
+      const response = await axios.get(`${process.env.API_URL}/api/admin`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -46,7 +46,7 @@ export default function ManageUsersPage() {
     try {
       const token = sessionStorage.getItem("accessToken").replace(/"/g, "");
       await axios.post(
-        "http://localhost:5000/api/admin",
+        `${process.env.API_URL}/api/admin/`,
         { ...newUser },
         {
           headers: {
@@ -71,7 +71,7 @@ export default function ManageUsersPage() {
     try {
       const token = sessionStorage.getItem("accessToken").replace(/"/g, "");
       await axios.put(
-        `http://localhost:5000/api/admin/${editUser.id}`,
+        `${process.env.API_URL}/api/admin/${editUser.id}`,
         {
           name: editUser.name,
           email: editUser.email,
@@ -104,7 +104,7 @@ export default function ManageUsersPage() {
     try {
       const token = sessionStorage.getItem("accessToken").replace(/"/g, "");
 
-      await axios.delete(`http://localhost:5000/api/admin/${userId}`, {
+      await axios.delete(`${process.env.API_URL}/api/admin/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

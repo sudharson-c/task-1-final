@@ -14,7 +14,7 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${process.env.API_URL}api/auth/register`,
         {
           name,
           email,
