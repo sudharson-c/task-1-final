@@ -13,8 +13,9 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log(process.env.NEXT_PUBLIC_API_URL);
       const response = await axios.post(
-        `https://task-1-final-nine.vercel.app/api/auth/login`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
         { email, password },
         {
           headers: {
