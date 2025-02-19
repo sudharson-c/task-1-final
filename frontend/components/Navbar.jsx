@@ -2,19 +2,14 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function Navbar() {
-  const user = JSON.parse(localStorage.getItem("user"));
   const router = useRouter();
+  const { user, setUser } = useLocalStorage("user", null);
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-      router.push("/login");
-    }
-  }, [user]);
   const handleLogout = () => {
-    localStorage.removeItem("user"); // Clear user data
+    setUser(null);
     router.push("/login");
   };
 
@@ -24,25 +19,25 @@ export default function Navbar() {
         <Link href="/" className="text-xl font-bold">
           School Management
         </Link>
-        <div className="flex items-center space-x-6">
-          <Link href="/admin" className="hover:text-gray-200">
-            Admin
-          </Link>
-          <Link href="/teacher" className="hover:text-gray-200">
-            Teacher
-          </Link>
-          <Link href="/student" className="hover:text-gray-200">
-            Student
-          </Link>
-          {user && (
+        {user && (
+          <div className="flex items-center space-x-6">
+            <Link href="/admin" className="hover:text-gray-200">
+              Admin
+            </Link>
+            <Link href="/teacher" className="hover:text-gray-200">
+              Teacher
+            </Link>
+            <Link href="/student" className="hover:text-gray-200">
+              Student
+            </Link>
             <button
               onClick={handleLogout}
               className="bg-red-500 px-4 py-2 rounded hover:bg-red-600"
             >
               Logout
             </button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </nav>
   );
