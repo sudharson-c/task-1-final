@@ -14,7 +14,7 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${process.env.API_URL}/api/auth/login`,
+        `https://task-1-final-nine.vercel.app/api/auth/login`,
         { email, password },
         {
           headers: {
