@@ -6,11 +6,8 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function Navbar() {
   const router = useRouter();
-  const { user, setUser } = useLocalStorage("user", null);
+  const [user, setUser] = useLocalStorage("user", null);
 
-  useEffect(() => {
-    if (!user) router.push("/login");
-  }, [user]);
   const handleLogout = () => {
     setUser(null);
     router.push("/login");
