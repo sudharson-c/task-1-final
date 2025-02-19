@@ -2,11 +2,13 @@
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const [, setUser] = useLocalStorage("user", null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +21,7 @@ export default function LoginPage() {
         "accessToken",
         JSON.stringify(response.data.accessToken)
       );
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      setUser(response.data.user);
       router.push("/");
     } catch (error) {
       console.error("Login failed:", error);

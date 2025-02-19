@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -9,6 +10,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
   const router = useRouter();
+  const [user, setUser] = useLocalStorage("user", null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +24,7 @@ export default function RegisterPage() {
           role,
         }
       );
-      localStorage.setItem("user", JSON.stringify(response.data.user)); // Store user data
+      setUser(response.data.user);
       router.push("/dashboard");
     } catch (error) {
       console.error("Registration failed:", error);

@@ -1,10 +1,11 @@
 "use client";
 import LogoutButton from "@/components/LogoutButton";
 import ProtectedRoute from "@/components/ProtectedRoute";
-
+import useLocalStorage from "@/hooks/useLocalStorage";
 
 export default function Page() {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [user] = useLocalStorage("user", null);
+
   if (!user) {
     return <div>Loading...</div>;
   }
