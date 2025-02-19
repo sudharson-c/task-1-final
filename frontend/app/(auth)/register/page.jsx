@@ -22,6 +22,11 @@ export default function RegisterPage() {
           email,
           password,
           role,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
       setUser(response.data.user);

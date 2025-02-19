@@ -15,7 +15,12 @@ export default function LoginPage() {
     try {
       const response = await axios.post(
         `${process.env.API_URL}/api/auth/login`,
-        { email, password }
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       sessionStorage.setItem(
         "accessToken",
