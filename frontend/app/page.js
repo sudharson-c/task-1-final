@@ -1,11 +1,10 @@
-"use client";
+"use client"
 import LogoutButton from "@/components/LogoutButton";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import useLocalStorage from "@/hooks/useLocalStorage";
-import { useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
 
-export default function Page() {
-  const [user] = useLocalStorage("user", null);
+export default async function Page() {
+  const { user } = useAuth();
 
   if (!user) {
     return <div>Loading...</div>;

@@ -2,20 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { useAuth } from "@/context/AuthContext";
 
 export default function ProtectedRoute({ children }) {
   const router = useRouter();
-  // const [user] = useLocalStorage("user", null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    const token = sessionStorage.getItem("token");
-
-    if (!user || !token) {
+    if (!user) {
       router.push("/login");
     }
-  }, [router]);
+  }, [user, router]);
 
   if (!user) {
     return <div>Loading...</div>;

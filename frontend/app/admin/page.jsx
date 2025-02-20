@@ -109,7 +109,7 @@ export default function ManageUsersPage() {
           Authorization: `Bearer ${token}`,
         },
       });
-      fetchUsers(); // Refresh the list
+      fetchUsers();
     } catch (error) {
       console.error("Error deleting user:", error);
     }

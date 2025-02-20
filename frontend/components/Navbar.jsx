@@ -1,17 +1,16 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import useLocalStorage from "@/hooks/useLocalStorage";
 
-export default function Navbar() {
+export default async function Navbar() {
   const router = useRouter();
-  const [user, setUser] = useLocalStorage("user", null);
+  const { user, logout } = useAuth();
 
   if (!user) router.push("/login");
 
   const handleLogout = () => {
-    setUser(null);
+    logout();
     router.push("/login");
   };
 

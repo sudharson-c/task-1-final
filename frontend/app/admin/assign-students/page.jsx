@@ -41,7 +41,7 @@ export default function AssignStudentsPage() {
     try {
       const token = sessionStorage.getItem("accessToken").replace(/"/g, "");
       await axios.post(
-        "http://localhost:5000/api/admin/assign",
+        `${process.env.API_URL}/api/admin/assign`,
         { studentId, teacherId },
         {
           headers: {

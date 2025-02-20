@@ -1,18 +1,18 @@
 "use client";
 
+import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import useLocalStorage from "@/hooks/useLocalStorage";
 
-export default function RoleBasedRoute({ allowedRoles, children }) {
+export default async function RoleBasedRoute({ allowedRoles, children }) {
   const router = useRouter();
-  const [user] = useLocalStorage("user", null);
+  const { user } = useAuth();
 
   useEffect(() => {
-    if (!user || !allowedRoles.includes(user.role)) {
+    if (user || !allowedRoles.includes(user.role)) {
       router.push("/unauthorized");
     }
-  }, [user, allowedRoles, router]);
+  }, [user, allowedRoles]);
 
   if (!user || !allowedRoles.includes(user.role)) {
     return <div>Loading...</div>;

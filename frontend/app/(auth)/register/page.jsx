@@ -2,15 +2,15 @@
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { cookies } from "next/headers";
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("student");
   const router = useRouter();
-  const [user, setUser] = useLocalStorage("user", null);
+  const cookieStore = await cookies();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,8 +29,8 @@ export default function RegisterPage() {
           },
         }
       );
-      setUser(response.data.user);
-      router.push("/dashboard");
+      cookieStore.set("user", response.data.user);
+      router.push("/");
     } catch (error) {
       console.error("Registration failed:", error);
     }

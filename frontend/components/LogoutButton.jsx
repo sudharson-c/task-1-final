@@ -1,13 +1,13 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import useLocalStorage from "@/hooks/useLocalStorage";
 
-export default function LogoutButton() {
+export default async function LogoutButton() {
   const router = useRouter();
-  const [, setUser] = useLocalStorage("user", null);
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    setUser(null);
+    logout();
     router.push("/login");
   };
 
